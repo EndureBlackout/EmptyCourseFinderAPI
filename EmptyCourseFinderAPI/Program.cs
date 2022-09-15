@@ -23,6 +23,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection(nameof(MongoSettings)));
 
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<ILeagueService, LeagueService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

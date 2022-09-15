@@ -25,10 +25,17 @@ namespace EmptyCourseFinderAPI.Controllers
 
             if(string.IsNullOrEmpty(userID))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
-            return Ok(await _userService.GetUserDetails(userID));
+            var user = await _userService.GetUserDetails(userID);
+
+            if(user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
         [HttpPost]
@@ -38,7 +45,7 @@ namespace EmptyCourseFinderAPI.Controllers
 
             if(string.IsNullOrEmpty(userId))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             if(await _userService.GetUserDetails(userId) != null)
@@ -63,7 +70,7 @@ namespace EmptyCourseFinderAPI.Controllers
 
             if(string.IsNullOrEmpty(userId))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             if(await _userService.GetUserDetails(userId) == null)
@@ -99,7 +106,7 @@ namespace EmptyCourseFinderAPI.Controllers
 
             if(string.IsNullOrEmpty(userId))
             {
-                return BadRequest();
+                return Unauthorized();
             }
 
             var deletedUser = await _userService.DeleteUserDetails(userId);

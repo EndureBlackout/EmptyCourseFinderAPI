@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Concretes\LeagueController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Controllers\LeagueController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="JWT" Version="9.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
     <PackageReference Include="MongoDB.Driver" Version="2.17.1" />

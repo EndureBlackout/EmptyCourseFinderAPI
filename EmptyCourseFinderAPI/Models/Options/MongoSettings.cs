@@ -4,6 +4,7 @@
     {
         public string ConnectionString { get; set; }
         public string Database { get; set; }
-        public string Collection { get; set; }
+        public string UserCollection { get; set; }
+        public string LeagueCollection { get; set; }
     }
 }

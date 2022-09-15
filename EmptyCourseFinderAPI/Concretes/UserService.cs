@@ -9,17 +9,20 @@ namespace EmptyCourseFinderAPI.Concretes
     public class UserService : IUserService
     {
         public readonly MongoSettings _mongoSettings;
+        public readonly MongoClient _mongoClient;
         public readonly IMongoCollection<User> _users;
 
         public UserService(IOptions<MongoSettings> mongoOptions)
         {
             _mongoSettings = mongoOptions.Value;
+            _mongoClient = new MongoClient(_mongoSettings.ConnectionString);
             _users = GetUserCollection();
         }
 
-        public async Task<User> GetUserDetails(string userId)
+        public async Task<User?> GetUserDetails(string userId)
         {
             var result = await _users.FindAsync(x => x.UserId == userId);
+
             var user = await result.FirstOrDefaultAsync();
 
             return user;
@@ -70,11 +73,9 @@ namespace EmptyCourseFinderAPI.Concretes
 
         private IMongoCollection<User> GetUserCollection()
         {
-            var client = new MongoClient(_mongoSettings.ConnectionString);
+            var database = _mongoClient.GetDatabase(_mongoSettings.Database);
 
-            var database = client.GetDatabase(_mongoSettings.Database);
-
-            return database.GetCollection<User>(_mongoSettings.Collection);
+            return database.GetCollection<User>(_mongoSettings.UserCollection);
         }
     }
 }
